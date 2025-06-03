@@ -40,4 +40,9 @@ public class RoomController {
                 .map(RoomMapper::toResponse);
     }
 
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable String id){
+         roomService.deleteById(id);
+    }
+
 }
