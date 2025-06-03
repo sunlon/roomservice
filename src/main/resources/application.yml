@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: roomservice
+
+  data:
+    mongodb:
+      database: roomservice
+      port: '27017'
+      host: localhost
