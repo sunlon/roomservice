@@ -41,8 +41,8 @@ public class RoomController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable String id){
-         roomService.deleteById(id);
+    public Mono<Void> delete(@PathVariable String id){
+     return     roomService.deleteById(id);
     }
 
 }
