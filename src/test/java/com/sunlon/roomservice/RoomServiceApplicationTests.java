@@ -1,4 +1,4 @@
-package com.sunlon.roomservice.rooservice;
+package com.sunlon.roomservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
