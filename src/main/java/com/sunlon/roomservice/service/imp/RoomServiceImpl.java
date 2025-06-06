@@ -19,17 +19,19 @@ public class RoomServiceImpl implements RoomService {
     private RoomMapper roomMapper;
 
 
-//    @Override
-//    public Flux<RoomDTO> getAll() {
-//
-//        Flux<RoomDTO> flux=repository.findAll().map(r -> roomMapper.toRoomDTO(r));
-//        return  flux;
-//    }
+    @Override
+    public Flux<RoomDTO> getAll() {
 
-//    @Override
-//    public Mono<RoomDTO> getRoomById(String id) {
-//        return repository.findById(id).map(r -> roomMapper.toRoomDTO(r));
-//    }
+        Flux<RoomDTO> flux=repository.findAll().map(r -> roomMapper.toRoomDTO(r));
+        return  flux;
+    }
+
+    @Override
+    public Mono<RoomDTO> getRoomById(String id) {
+
+
+        return repository.findById(id).map(r -> roomMapper.toRoomDTO(r));
+    }
 
     @Override
     public Mono<RoomDTO> createRoom(RoomDTO roomDTO) {
@@ -37,17 +39,22 @@ public class RoomServiceImpl implements RoomService {
 
         Mono<RoomDTO> mono =  repository.save(room).map(r -> roomMapper.toRoomDTO(r));
         return mono;
-
     }
 
-//    @Override
-//    public Mono<RoomDTO> updateRoom(String id, RoomDTO roomDTO) {
-//
-//        return null;
-//    }
+    @Override
+    public Mono<RoomDTO> updateRoom(String id, RoomDTO roomDTO) {
+        Room room = roomMapper.toRoom(roomDTO);
+        Mono<RoomDTO> mono =     repository.findById(id).flatMap( existringRoom->{
+            existringRoom.setName(room.getName());
+            existringRoom.setAttributes(room.getAttributes());
+            return  repository.save(existringRoom);
+                }
+        ).map(r -> roomMapper.toRoomDTO(r));
+        return mono;
+    }
 
-//    @Override
-//    public Mono<Void> deleteRoomById(String id) {
-//        return repository.deleteById(id);
-//    }
+    @Override
+    public Mono<Void> deleteRoomById(String id) {
+        return repository.deleteById(id);
+    }
 }

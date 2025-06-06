@@ -8,9 +8,9 @@ import reactor.core.publisher.Mono;
 
 public interface RoomService {
 
-//    Flux<RoomDTO> getAll();
-//    Mono<RoomDTO> getRoomById(String id);
+    Flux<RoomDTO> getAll();
+    Mono<RoomDTO> getRoomById(String id);
     Mono<RoomDTO> createRoom(RoomDTO roomDTO);
-//    Mono<RoomDTO> updateRoom(String id,RoomDTO roomDTO);
-//    Mono<Void> deleteRoomById(String id);
+    Mono<RoomDTO> updateRoom(String id,RoomDTO roomDTO);
+    Mono<Void> deleteRoomById(String id);
 }

@@ -20,24 +20,24 @@ public class RoomController {
         return roomService.createRoom(roomDTO);
     }
 
-//    @GetMapping
-//    public Flux<RoomDTO> getAllRoom() {
-//        return roomService.getAll();
-//    }
-//
-//    @GetMapping("/{id}")
-//    public Mono<RoomDTO> getRoomById(@PathVariable String id) {
-//        return roomService.getRoomById(id);
-//    }
+    @GetMapping
+    public Flux<RoomDTO> getAllRoom() {
+        return roomService.getAll();
+    }
 
-//    @PutMapping("/{id}")
-//    public Mono<RoomDTO> updateRoom(@PathVariable String id, @RequestBody RoomDTO request) {
-//        return null;
-//    }
+    @GetMapping("/{id}")
+    public Mono<RoomDTO> getRoomById(@PathVariable String id) {
+        return roomService.getRoomById(id);
+    }
 
-//    @DeleteMapping("/{id}")
-//    public Mono<Void> delete(@PathVariable String id){
-//     return roomService.deleteRoomById(id);
-//    }
+    @PutMapping("/{id}")
+    public Mono<RoomDTO> updateRoom(@PathVariable String id, @RequestBody RoomDTO roomDTO) {
+        return roomService.updateRoom(id, roomDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    public Mono<Void> delete(@PathVariable String id){
+     return roomService.deleteRoomById(id);
+    }
 
 }
