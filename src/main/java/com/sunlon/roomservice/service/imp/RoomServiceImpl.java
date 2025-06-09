@@ -5,13 +5,13 @@ import com.sunlon.roomservice.mapper.RoomMapper;
 import com.sunlon.roomservice.domain.Room;
 import com.sunlon.roomservice.repository.RoomRepository;
 import com.sunlon.roomservice.service.RoomService;
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+@Slf4j
 @Service
-@RequiredArgsConstructor
 public class RoomServiceImpl implements RoomService {
     @Autowired
     private RoomRepository repository;
@@ -22,35 +22,35 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public Flux<RoomDTO> getAll() {
 
-        Flux<RoomDTO> flux=repository.findAll().map(r -> roomMapper.toRoomDTO(r));
-        return  flux;
+        log.debug("=> Starting get all room form DB");
+
+        return  repository.findAll().map( roomMapper::toRoomDTO);
     }
 
     @Override
     public Mono<RoomDTO> getRoomById(String id) {
-
-
-        return repository.findById(id).map(r -> roomMapper.toRoomDTO(r));
+        log.debug("=> Starting get room form DB by ID: {}",id);
+        return repository.findById(id).map(roomMapper::toRoomDTO);
     }
 
     @Override
     public Mono<RoomDTO> createRoom(RoomDTO roomDTO) {
-        Room room = roomMapper.toRoom(roomDTO);
 
-        Mono<RoomDTO> mono =  repository.save(room).map(r -> roomMapper.toRoomDTO(r));
-        return mono;
+        log.debug("Saving room to DB: {}", roomDTO);
+
+        Room room = roomMapper.toRoom(roomDTO);
+        return  repository.save(room).map( roomMapper::toRoomDTO);
+
     }
 
     @Override
     public Mono<RoomDTO> updateRoom(String id, RoomDTO roomDTO) {
-        Room room = roomMapper.toRoom(roomDTO);
-        Mono<RoomDTO> mono =     repository.findById(id).flatMap( existringRoom->{
-            existringRoom.setName(room.getName());
-            existringRoom.setAttributes(room.getAttributes());
-            return  repository.save(existringRoom);
+    //    Room room = roomMapper.toRoom(roomDTO);
+        return  repository.findById(id).flatMap( existringRoom->{
+            return  repository.save(roomMapper.updateRoomFromDTO(roomDTO,existringRoom));
                 }
-        ).map(r -> roomMapper.toRoomDTO(r));
-        return mono;
+        ).map(roomMapper::toRoomDTO);
+
     }
 
     @Override

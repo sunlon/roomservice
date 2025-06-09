@@ -7,3 +7,8 @@ spring:
       database: roomservice
       port: '27017'
       host: localhost
+
+logging:
+  level:
+    root: INFO
+    com.sunlon.roomservice: DEBUG
