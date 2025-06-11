@@ -22,21 +22,21 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public Flux<RoomDTO> getAll() {
 
-        log.debug("=> Starting get all room form DB");
+
 
         return  repository.findAll().map( roomMapper::toRoomDTO);
     }
 
     @Override
     public Mono<RoomDTO> getRoomById(String id) {
-        log.debug("=> Starting get room form DB by ID: {}",id);
+
         return repository.findById(id).map(roomMapper::toRoomDTO);
     }
 
     @Override
     public Mono<RoomDTO> createRoom(RoomDTO roomDTO) {
 
-        log.debug("Saving room to DB: {}", roomDTO);
+
 
         Room room = roomMapper.toRoom(roomDTO);
         return  repository.save(room).map( roomMapper::toRoomDTO);
