@@ -11,17 +11,4 @@ public interface RoomMapper {
     Room updateRoomFromDTO(RoomDTO roomDTO, @MappingTarget Room room);
     RoomDTO toRoomDTO(Room room);
 
-//    public Room toRoom(RoomDTO roomDTO){
-//        Room room = new Room();
-//        room.setName(roomDTO.getName());
-//        room.setAttributes(roomDTO.getAttributes());
-//        return  room;
-//    }
-
-//    public RoomDTO toRoomDTO(Room room){
-//        RoomDTO dto = new RoomDTO();
-//        dto.setName(room.getName());
-//        dto.setAttributes(room.getAttributes());
-//        return dto;
-//    }
 }
